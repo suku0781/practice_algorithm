@@ -1,4 +1,4 @@
-const number = '4321';
+const number = '1924';
 const k = 1;
 
 console.log(solution(number, k))

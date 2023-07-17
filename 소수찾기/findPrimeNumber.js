@@ -6,19 +6,21 @@ function getPermutations(arr, selectNumber){
 
     // selectNumber가 1일 경우
     // 만약 계속 재귀하여 selectNumber가 1이 되면 [...arr] 리턴
-    if(selectNumber === 1) return arr.map(v => v);
+    if(selectNumber === 1) return arr.map(function(v) {
+        return v;
+    });
 
     // arr.length만큼 반복. 
     // fixed는 arr[index]번째, 
     arr.forEach((fixed, index, origin) => {
-        debugger
+        // debugger
         const rest = [...origin.slice(0, index), ...origin.slice(index + 1)]; // fixed를 제외한 arr의 나머지 값
+        debugger;
         const permutation = getPermutations(rest, selectNumber - 1); // 재귀 후 리턴된 result배열을 가짐.
 
-        if([...permutation].length == 1) { // 만약 [...permutation]에 값이 1개 있다면 
-            result.push(fixed+permutation[0])
-            debugger
-        } else {
+        if([...permutation].length == 1) { // 만약 [...permutation]에 값이 1개 있다면 바로 (fixed+permutation)를 result에 넣음
+            result.push(fixed+permutation)
+        } else { // 만약 [...permutation]에 값이 2개 이상 있다면 forEach로 순회하면서 (fixed+item)을 result에 넣음
             permutation.forEach( item => result.push(fixed+item) )
         }
     })

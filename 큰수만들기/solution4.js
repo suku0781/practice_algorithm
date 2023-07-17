@@ -12,7 +12,9 @@ function solution(number, k) {
     // const sortedNum = number.sort();
     console.log(number);
     const numDiv2 = Math.ceil(number.split('').map(Number).length / 2);
-    let numberArr = number.split('').map(Number);
+    let numberArr = number.split('').map(Number);.forEach(function(item){
+        item=Number(item);
+    })
     
     const divArr = []
     

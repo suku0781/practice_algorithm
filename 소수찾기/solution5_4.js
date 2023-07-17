@@ -21,14 +21,14 @@ function solution(numbers) {
         while (needVisit.length !== 0) { // 탐색해야할 노드가 남아있다면
             const node = needVisit.shift(); // 가장 오래 남아있던 정점을 뽑아냄.
             if (!visited.includes(node)) { // 해당 노드 방문이 처음이라면,
-            visited.push(node); 
-            needVisit = [...needVisit, ...graph[node]];
+                visited.push(node); 
+                needVisit = [...needVisit, ...graph[node]];
             }
         }
         return visited;
     };
 
-    return BFS(arr, "1");
+    console.log(BFS(arr, "1"));
 }
 
 
