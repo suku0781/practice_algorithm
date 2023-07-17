@@ -26,35 +26,78 @@ W !== 0,
 T !== 0,
 S !== 0
  */
-console.log(solution());
-function solution(){
-    const testString = 'READ + WRITE + TALK = SKILL';
-    const array = testString.split('').join().split(' ');
-    const cutSpe = (items) => {
-        const target = /[+/,/=]/g;
-        const itemArray = [];
-        items.forEach(item => {
-            const afReplace = (item.replace(target, '') == '') ? '' : item.replace(target, '');
-            if(afReplace) itemArray.push(afReplace);
-        });
-        return itemArray;
-    };
 
-    const newArray = cutSpe(array);
-    const itemObj = {};
+// function solution(str){
+//     const array = str.split('').join().split(' ');
+//     const cutSpe = (items, rtSubject) => {
+//         const target = /[+/,/=]/g;
+//         const itemArray = [];
+//         items.forEach(item => {
+//             let afReplace = '';
+//             if(rtSubject == 'string'){
+//                 afReplace = (item.replace(target, '') == '') ? '' : item.replace(target, '');
+//             } else {
+//                 const targetSpe = /[+/=]/g;
+//                 if(item.search(targetSpe)) afReplace = item.replaceAll("\,", "");
+//             }
+//             if(afReplace) itemArray.push(afReplace);
+//         });
+//         return itemArray;
+//     };
 
-    newArray.forEach((items, index) => {
-        // console.log(newArray[index], typeof(newArray[index].split('')));
-        newArray[index].split('').forEach((item, idx) => {
-            debugger;
-            itemObj[item] = 1
-            console.log(itemObj)
+//     const newArray = cutSpe(array, 'string');
+//     const newArrInclSpe = cutSpe(array, 'spe');
+//     const itemObj = {};
+//     const cantBeZero = [];
+
+//     newArrInclSpe.forEach((items, index) => {
+//         // console.log(newArray[index], typeof(newArray[index].split('')));
+        
+//         debugger
+//         newArrInclSpe[index].split('').forEach((item, idx) => {
+//             const targetSpe = /[+/-/*///%/=]/g;
+//             debugger;
+//             if(!targetSpe.test(item)){
+//                 if(idx == 0) cantBeZero.push(item);
+    
+//                 (itemObj[item]) ? itemObj[item]++ : itemObj[item] = 1 ;
+//                 console.log(itemObj)
+//             }
+//         })
+//         // console.log(items, index);
+//     })
+
+//     console.log('cutspe test', cutSpe(array));
+
+
+
+// }
+
+
+const testString = 'READ + WRITE + TALK = SKILL';
+console.log(solution(testString));
+
+function getPermutations(arr, selectNumber){
+    const result = [];
+
+    if(selectNumber === 1) return arr.map(v => v);
+}
+
+function solution(str) {
+    const stringArr = str.split(' ');
+    const array = [];
+    const targetSpe = /[+/-/*///%/=]/g;
+    let arrayLength = stringArr.length;
+    
+    stringArr.forEach(item => { if(targetSpe.test(item)) arrayLength--; });
+    debugger
+
+    for(let i = 1 ; i <= stringArr.length ; i++){
+        
+        debugger
+        Object.values(getPermutations(stringArr, i)).forEach(item => {
+            if(!array.includes(item)) array.push(item);
         })
-        // console.log(items, index);
-    })
 
-    console.log('cutspe test', cutSpe(array), newArray);
-
-
-
+    }
 }
