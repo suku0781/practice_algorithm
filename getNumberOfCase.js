@@ -27,110 +27,101 @@ T !== 0,
 S !== 0
  */
 
-// function solution(str){
-//     const array = str.split('').join().split(' ');
-//     const cutSpe = (items, rtSubject) => {
-//         const target = /[+/,/=]/g;
-//         const itemArray = [];
-//         items.forEach(item => {
-//             let afReplace = '';
-//             if(rtSubject == 'string'){
-//                 afReplace = (item.replace(target, '') == '') ? '' : item.replace(target, '');
-//             } else {
-//                 const targetSpe = /[+/=]/g;
-//                 if(item.search(targetSpe)) afReplace = item.replaceAll("\,", "");
-//             }
-//             if(afReplace) itemArray.push(afReplace);
-//         });
-//         return itemArray;
-//     };
-
-//     const newArray = cutSpe(array, 'string');
-//     const newArrInclSpe = cutSpe(array, 'spe');
-//     const itemObj = {};
-//     const cantBeZero = [];
-
-//     newArrInclSpe.forEach((items, index) => {
-//         // console.log(newArray[index], typeof(newArray[index].split('')));
-        
-//         debugger
-//         newArrInclSpe[index].split('').forEach((item, idx) => {
-//             const targetSpe = /[+/-/*///%/=]/g;
-//             debugger;
-//             if(!targetSpe.test(item)){
-//                 if(idx == 0) cantBeZero.push(item);
-    
-//                 (itemObj[item]) ? itemObj[item]++ : itemObj[item] = 1 ;
-//                 console.log(itemObj)
-//             }
-//         })
-//         // console.log(items, index);
-//     })
-
-//     console.log('cutspe test', cutSpe(array));
-
-
-
-// }
-
-
 const testString = 'READ + WRITE + TALK = SKILL';
+// const testString = 'A + B = C';
+const cantBeZeroObj = [];
+
+let stringObj = {};
+testString.split(' ').join().split(',').forEach( (items) => {
+    const spe = /[+/-/*///%/=]/g; 
+    if( !spe.test(items) ){
+        if(items.length == 1){
+            cantBeZeroObj.push(items);
+            stringObj[items] = 1;
+
+        } else {
+            items.split('').forEach((item, idx) => {
+                if(idx == 0) cantBeZeroObj.push(item);
+
+                if(stringObj[item]){
+                    stringObj[item] += 1;
+                } else {
+                    stringObj[item] = 1;
+                }
+            })
+            
+        }
+    }
+} );
+const stringLength = Object.values(stringObj).length;
 console.log(solution(testString));
 
-function getCombinations(arr, selectNumber){
+
+function getPermutations(arr, selectNumber){
     const result = [];
+
     debugger
 
-    // if(selectNumber === 1) return arr.map(v => v);
-    arr.forEach((fixed, index, origin) => {
-        debugger
-        const rest = origin.slice(index + 1);
-        const combinations = getCombinations(rest, selectNumber -1 );
-        debugger
-        const attached = combinations.map(el => [fixed, ...el]);
+    if(selectNumber == 1) return arr.map(v => v);
 
-        result.push(...attached)
-    });
+    arr.forEach((fixed, index, origin) => {
+        const rest = [...origin.slice(0, index), ...origin.slice(index + 1)];
+        const permutation = getPermutations(rest, selectNumber - 1);
+
+        if(permutation.length == 1){
+            result.push(fixed+permutation);
+        } else {
+            permutation.forEach( item => result.push(fixed+item) );
+        }
+    } )
 
     return result;
-
-    // arr.forEach()
 }
 
 function solution(str) {
-    const stringArr = str.split(' ');
+    const stringArr = str.split(' ').join().split(',');
     const array = [];
     
-    stringArr.forEach((items, index) => {
+    debugger
+    objectInputNumber(stringArr);
+
+    stringArr.forEach( (items, index) => {
         const spe = /[+/-/*///%/=]/g;
-        if(!spe.test(items) ){
-            stringArr[index].split('').forEach((item, idx) => {
-                console.log(item);
-                debugger
+        if(spe.test(items)){
+            console.log("연산기호");
+        } else {
+            console.log("문자열");
+            debugger
+            Object.values(getPermutations(items.split(''), items.length)).forEach( (item, idx) => {
+                if(!array.includes(item)) array.push(item);
             })
         }
     })
+
+    debugger
+}
+
+function objectInputNumber(arr){
+    const genRandomNumber = (min, max) => {
+        return Math.floor( Math.random() * (max - min + 1) ) + min;
+    }
+
+    arr.forEach( (items, index) => {
+        const spe = /[+/-/*///%/=]/g;
+        debugger
+        if(spe.test(items)){
+            console.log("연산기호");
+        } else {
+            console.log("문자열");
+            // debugger
+            items.split('').forEach(item => {
+                if(item.includes(cantBeZeroObj)){
+                    debugger
+                }
+            } )
+            
+        }
+    })
     
-
-
-    // stringArr.forEach(item => { if(targetSpe.test(item)) arrayLength--; });
-    // const getItemLength = stringArr.map(v => {
-    //     debugger
-    //     const spe = /[+/-/*///%/=]/g;
-    //     return (spe.test(v)) ?  0 : v.length;
-    // });
-    // debugger
-
-    // for(let items of getItemLength){
-    //     debugger
-    //     // if(items !== 0){
-    //     //     Object.values(getCombinations(stringArr, items)).forEach(item => {  
-    //     //         if(!array.includes(item)) array.push(item);
-    //     //     })
-    //     // }
-
-    // }
-
-
 }
 
