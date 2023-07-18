@@ -11,7 +11,7 @@ READ + WRITE + TALK = SKILL 이 성립되는 경우의수는 몇가지?
 
 결과) 1가지
 
-W = 7, e = 4, l(엘) = 3, o = 8, v = 0, C = 2, d = 1, I(아이) = 9, Q = 6
+W = 7, e = 4, l = 3, o = 8, v = 0, C = 2, d = 1, I = 9, Q = 6
 
 C = 2, d = 1, e = 4, I(아이) = 9, l(엘) = 3, o = 8, Q = 6, v = 0, W = 7
 
@@ -77,27 +77,60 @@ S !== 0
 const testString = 'READ + WRITE + TALK = SKILL';
 console.log(solution(testString));
 
-function getPermutations(arr, selectNumber){
+function getCombinations(arr, selectNumber){
     const result = [];
+    debugger
 
-    if(selectNumber === 1) return arr.map(v => v);
+    // if(selectNumber === 1) return arr.map(v => v);
+    arr.forEach((fixed, index, origin) => {
+        debugger
+        const rest = origin.slice(index + 1);
+        const combinations = getCombinations(rest, selectNumber -1 );
+        debugger
+        const attached = combinations.map(el => [fixed, ...el]);
+
+        result.push(...attached)
+    });
+
+    return result;
+
+    // arr.forEach()
 }
 
 function solution(str) {
     const stringArr = str.split(' ');
     const array = [];
-    const targetSpe = /[+/-/*///%/=]/g;
-    let arrayLength = stringArr.length;
     
-    stringArr.forEach(item => { if(targetSpe.test(item)) arrayLength--; });
-    debugger
+    stringArr.forEach((items, index) => {
+        const spe = /[+/-/*///%/=]/g;
+        if(!spe.test(items) ){
+            stringArr[index].split('').forEach((item, idx) => {
+                console.log(item);
+                debugger
+            })
+        }
+    })
+    
 
-    for(let i = 1 ; i <= stringArr.length ; i++){
-        
-        debugger
-        Object.values(getPermutations(stringArr, i)).forEach(item => {
-            if(!array.includes(item)) array.push(item);
-        })
 
-    }
+    // stringArr.forEach(item => { if(targetSpe.test(item)) arrayLength--; });
+    // const getItemLength = stringArr.map(v => {
+    //     debugger
+    //     const spe = /[+/-/*///%/=]/g;
+    //     return (spe.test(v)) ?  0 : v.length;
+    // });
+    // debugger
+
+    // for(let items of getItemLength){
+    //     debugger
+    //     // if(items !== 0){
+    //     //     Object.values(getCombinations(stringArr, items)).forEach(item => {  
+    //     //         if(!array.includes(item)) array.push(item);
+    //     //     })
+    //     // }
+
+    // }
+
+
 }
+
