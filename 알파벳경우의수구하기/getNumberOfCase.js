@@ -43,8 +43,9 @@ function getPermutations(arr, selectNumber) {
             result.push(fixed+permutation);
         } else {
             permutation.forEach( item => {
-                if(Number(fixed)+Number(item) !== 0) {result.push(fixed+item)} else {debugger;console.log(Number(fixed)+Number(item))}
+                if((fixed)+(item) !== 0) result.push(fixed+item)
                 // debugger
+                // result.push(fixed+item)
             })
         }
 
