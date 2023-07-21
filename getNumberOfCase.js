@@ -27,101 +27,44 @@ T !== 0,
 S !== 0
  */
 
-const testString = 'READ + WRITE + TALK = SKILL';
-// const testString = 'A + B = C';
-const cantBeZeroObj = [];
+const parameter = '0123456789';
+console.log(solution(parameter));
 
-let stringObj = {};
-testString.split(' ').join().split(',').forEach( (items) => {
-    const spe = /[+/-/*///%/=]/g; 
-    if( !spe.test(items) ){
-        if(items.length == 1){
-            cantBeZeroObj.push(items);
-            stringObj[items] = 1;
-
-        } else {
-            items.split('').forEach((item, idx) => {
-                if(idx == 0) cantBeZeroObj.push(item);
-
-                if(stringObj[item]){
-                    stringObj[item] += 1;
-                } else {
-                    stringObj[item] = 1;
-                }
-            })
-            
-        }
-    }
-} );
-const stringLength = Object.values(stringObj).length;
-console.log(solution(testString));
-
-
-function getPermutations(arr, selectNumber){
+function getPermutations(arr, selectNumber) {
     const result = [];
-
-    debugger
-
-    if(selectNumber == 1) return arr.map(v => v);
+    if(selectNumber === 1) {
+        return arr;
+    }
 
     arr.forEach((fixed, index, origin) => {
-        const rest = [...origin.slice(0, index), ...origin.slice(index + 1)];
-        const permutation = getPermutations(rest, selectNumber - 1);
-
+        // const rest = [...origin.slice(0, index), ...origin.slice(index + 1)];
+        const permutation = getPermutations(origin, selectNumber -1);
         if(permutation.length == 1){
             result.push(fixed+permutation);
         } else {
-            permutation.forEach( item => result.push(fixed+item) );
-        }
-    } )
-
-    return result;
-}
-
-function solution(str) {
-    const stringArr = str.split(' ').join().split(',');
-    const array = [];
-    
-    debugger
-    objectInputNumber(stringArr);
-
-    stringArr.forEach( (items, index) => {
-        const spe = /[+/-/*///%/=]/g;
-        if(spe.test(items)){
-            console.log("연산기호");
-        } else {
-            console.log("문자열");
-            debugger
-            Object.values(getPermutations(items.split(''), items.length)).forEach( (item, idx) => {
-                if(!array.includes(item)) array.push(item);
+            permutation.forEach( item => {
+                if(Number(fixed)+Number(item) !== 0) {result.push(fixed+item)} else {debugger;console.log(Number(fixed)+Number(item))}
+                // debugger
             })
         }
-    })
 
-    debugger
+
+    });
+    return result;
+
 }
 
-function objectInputNumber(arr){
-    const genRandomNumber = (min, max) => {
-        return Math.floor( Math.random() * (max - min + 1) ) + min;
+
+function solution(number) {
+    const array = [];
+    const numberArr = number.split('');
+    
+    for(let i = 4 ; i <= number.length ; i++ ) {
+        array.push(getPermutations(numberArr, i));
+        console.log(array)
+        break;
     }
 
-    arr.forEach( (items, index) => {
-        const spe = /[+/-/*///%/=]/g;
-        debugger
-        if(spe.test(items)){
-            console.log("연산기호");
-        } else {
-            console.log("문자열");
-            // debugger
-            items.split('').forEach(item => {
-                if(item.includes(cantBeZeroObj)){
-                    debugger
-                }
-            } )
-            
-        }
-    })
-    
 }
+
 
